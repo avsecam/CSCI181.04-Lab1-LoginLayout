@@ -3,7 +3,9 @@ package com.avsecam.loginlayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -21,26 +23,35 @@ public class MainActivity extends AppCompatActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    Context ctx = this;
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+    Log.d("TEST", "onCreate");
 
     loginButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        String username = usernameField.getText().toString();
-        String password = passwordField.getText().toString();
-
-        if (password == PASSWORD) {
-          Toast toast = Toast.makeText(ctx, "Logging in...", Toast.LENGTH_SHORT);
-          toast.show();
-        } else {
-          Toast toast = Toast.makeText(ctx, "Invalid credentials.", Toast.LENGTH_LONG);
-        }
+        tryLogin();
       }
     });
   }
 
+  private void tryLogin() {
+    String username = usernameField.getText().toString();
+    String password = passwordField.getText().toString();
+    Intent loginIntent = new Intent(MainActivity.this, LandingActivity.class);
+    loginIntent.putExtra("username", username);
+    loginIntent.putExtra("rememberMe", rememberMeField.isChecked());
+
+    Toast toast;
+    if (password.equals(PASSWORD)) {
+      toast = Toast.makeText(this, "Logging in...", Toast.LENGTH_SHORT);
+
+
+    } else {
+      toast = Toast.makeText(this, "Invalid credentials.", Toast.LENGTH_LONG);
+    }
+    toast.show();
+  }
 
 
 }
