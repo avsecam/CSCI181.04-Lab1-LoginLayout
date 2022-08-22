@@ -8,21 +8,24 @@ import android.widget.TextView;
 
 public class LandingActivity extends AppCompatActivity {
 
-    TextView welcomeText = findViewById(R.id.welcomeText);
-    String welcomeTextValue;
+    private TextView welcomeText;
+    private String welcomeTextValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
 
+        welcomeText = findViewById(R.id.welcomeText);
+
         Intent loginIntent = getIntent();
         String username = loginIntent.getStringExtra("username");
         boolean isRemembered = loginIntent.getBooleanExtra("rememberMe", false);
 
-        welcomeTextValue = "Welcome " + username + "! ";
+        welcomeTextValue = "Welcome " + username + "!!! ";
         if (isRemembered) {
-            welcomeText.setText(welcomeTextValue + "You will be remembered.\n");
+            welcomeTextValue += "You will be remembered.\n";
         }
+        welcomeText.setText(welcomeTextValue);
     }
 }
